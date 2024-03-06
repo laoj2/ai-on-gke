@@ -49,14 +49,20 @@ gcloud auth application-default login
 
 A model may require a security token to access it. For example, Llama2 from HuggingFace is a gated model that requires a [user access token](https://huggingface.co/docs/hub/en/security-tokens).
 
-You will need to add the secret value manually to the Secret Manager. This is to avoid adding a plain text token into the terraform state. To do so, [follow the instructions for creating a secret in your project here](https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets#before_you_begin).
+You will need to add the secret value manually to the Secret Manager. This is to avoid adding a plain text token into the terraform state.
 
-Once complete, you should add these related secret values to your `terraform.tfvars`:
+This step will create a secret in your project. Before you being, [follow the instructions for enabling and authenticating to the Secret Manager API in your project here](https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets#before_you_begin).
+
+Once complete, you should add these related secret values to your `terraform.tfvars`,
+so terraform will create a secret in your project:
 
 ```bash
 `secret_name` = $SECRET_ID                   # eg. "hugging_face_secret"
 `secret_location` =  $SECRET_LOCATION        # eg. "europe-central2"
 ```
+
+After the secret is created, you will need to add the secret value manually to
+the Secret Manager.
 
 ### Step 4: terraform initialize, plan and apply
 
